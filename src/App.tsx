@@ -8,7 +8,6 @@ import HomePage from './Components/Homepage/Homepage';
 import MovieDetails from './Components/MovieDetails/MovieDetails';
 import Form from './Components/TicketForm/Form';
 
-
 const App: React.FC = () => {
   return (
     <div className="App">
@@ -16,8 +15,8 @@ const App: React.FC = () => {
       <Router>
         <Routes>
           <Route path='/' element={<HomePage />} />
-          <Route path='movie-details/:id' element={<MovieDetails />} />
-          <Route path='movie-details/:id/book-ticket' element={<Form />} />
+          <Route path='/movie-details/:id' element={<MovieDetails />} />
+          <Route path='/movie-details/:id/book-ticket' element={<Form />} />
         </Routes>
       </Router>
       <Footer />

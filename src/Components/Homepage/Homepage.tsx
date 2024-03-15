@@ -17,7 +17,7 @@ interface Movie {
     medium: string;
     original: string;
     banner: string;
-}
+  }
 }
 interface SliderSettings {
   infinite: boolean;
@@ -34,7 +34,7 @@ const HomePage: React.FC = () => {
   useEffect(() => {
     //fetching movie data
     const getData = () => {
-      fetch(`https://ghibliapi.vercel.app/films`)
+      fetch(`https://ghibliapi.vercel.app`)
         .then((res) => res.json())
         .then((data: Movie[]) => setData(data));
     };

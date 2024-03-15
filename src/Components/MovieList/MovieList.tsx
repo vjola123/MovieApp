@@ -9,7 +9,7 @@ const MovieList: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://ghibliapi.vercel.app/films');
+        const response = await fetch('https://ghibliapi.vercel.app');
         if (!response.ok) {
           throw new Error('Failed to fetch movie data');
         }
