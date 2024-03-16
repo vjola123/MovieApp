@@ -2,23 +2,9 @@ import React, { useEffect, useState } from "react";
 import "./Homepage.css";
 import Slider from "react-slick";
 import MovieList from "../MovieList/MovieList";
+import { fetchAllMovies } from "../../api";
+import { Movie } from "../../type";
 
-interface Movie {
-  id: string;
-  title: string;
-  original_title: string;
-  description: string;
-  director: string;
-  release_date: string;
-  running_time: string;
-  rating: number;
-  price: number;
-  image: {
-    medium: string;
-    original: string;
-    banner: string;
-  }
-}
 interface SliderSettings {
   infinite: boolean;
   speed: number;
@@ -32,13 +18,14 @@ const HomePage: React.FC = () => {
   const [data, setData] = useState<Movie[]>([]);
 
   useEffect(() => {
-    //fetching movie data
-    const getData = () => {
-      fetch(`https://ghibliapi.vercel.app`)
-        .then((res) => res.json())
-        .then((data: Movie[]) => setData(data));
+    const fetchData = async () => {
+      const movies = await fetchAllMovies();
+      if (movies) {
+        setData(movies);
+      }
     };
-    getData();
+
+    fetchData();
   }, []);
 
   const settings: SliderSettings = {
@@ -53,11 +40,11 @@ const HomePage: React.FC = () => {
   return (
     <>
       <Slider {...settings}>
-        {data?.map((movie: Movie, index: number) => (
+        {data.map((movie: Movie, index: number) => (
           <img
             key={index}
-            src={movie.image ? movie.title : ""}
-            alt=""
+            src={movie.image} // Use the image URL for the image
+            alt={movie.title}
           />
         ))}
       </Slider>

@@ -5,9 +5,9 @@ const Navbar: React.FC = () => {
   return (
     <div className="nav-container">
       <div className="logo">
-        <h1>Book Movie Ticket</h1>
+        <h1>Ghibli Movie Ticket</h1>
       </div>
-      <div className="items"> Assignment</div>
+      <div className="items"> Book </div>
     </div>
   );
 }

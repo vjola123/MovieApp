@@ -1,47 +1,51 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Card, Button } from "antd";
+import { HeartOutlined, HeartFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import styles from "./Card.module.css";
+import { Movie } from "../../type";
 
-interface Movie {
-  id: string;
-  title: string;
-  original_title: string;
-  description: string;
-  director: string;
-  release_date: string;
-  running_time: string;
-  rating: number;
-  image: {
-    original: string;
-    banner: string;
-  };
-}
 
 interface CardProps {
   movie: Movie;
 }
 
-const Card: React.FC<CardProps> = ({ movie }) => {
+const MovieCard: React.FC<CardProps> = ({ movie }) => {
+  const { id, title, director, image } = movie;
+  const navigate = useNavigate();
+  const [isFavorite, setFavorite] = useState(false);
+  const [heartIcon, setHeartIcon] = useState(<HeartOutlined />);
+
+  const toggleFavorite = () => {
+    const newFavoriteState = !isFavorite;
+    setFavorite(newFavoriteState);
+    setHeartIcon(newFavoriteState ? <HeartFilled /> : <HeartOutlined />);
+  };
+
+  const handleImageError = () => {
+    // Handle the image error here, could be setting a state or performing any action
+    console.error("Error loading image:", image);
+  };
+
   return (
-    <div className="CardContainer" key={movie.id}>
-      <div className="Card">
-        <div className="movie-poster">
-          <img src={movie.image.original} alt={movie.title} />
-        </div>
-        <div className="details">
-          <h2 className="movie-name">{movie.title}</h2>
-          <h3 className="movie-original-title">{movie.original_title}</h3>
-          <div className="director">Director: {movie.director}</div>
-          <div className="release-date">Release Date: {movie.release_date}</div>
-          <div className="running-time">Running Time: {movie.running_time}</div>
-          <div className="rating">Rating: {movie.rating}</div>
-          <div className="description">{movie.description}</div>
-          <div className="view-btn">
-            <Link to={`/movie-details/${movie.id}`}>View</Link>
-          </div>
-        </div>
+    <Card
+      hoverable
+      onClick={() => navigate(id)}
+      className={styles.filmCard}
+    >
+      <Card.Meta title={title} description={director} />
+      <div className={styles.imageContainer}>
+        <img src={image} alt={title} onError={handleImageError} />
       </div>
-    </div>
+      <div className={styles.buttonContainer}>
+        <Button
+          className={styles.likeButton}
+          icon={heartIcon}
+          onClick={toggleFavorite}
+        />
+      </div>
+    </Card>
   );
 };
 
-export default Card;
+export default MovieCard;

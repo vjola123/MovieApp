@@ -2,6 +2,11 @@
     margin: 50px 0 20px 50px;
     font-size: 3rem;
 }
+.homepage-container {
+    display: grid;
+  grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns as needed */
+  gap: 20px; 
+}
 .slick-slide>div{
     height: 600px !important;
     margin: 10px;
@@ -17,7 +22,7 @@
     }
     .heading{
         font-size: 20px;
-        display: block;
+       
         margin: 10px auto;
     }
 }

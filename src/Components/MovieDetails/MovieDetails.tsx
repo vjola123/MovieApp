@@ -6,15 +6,14 @@ interface Movie {
   id: string;
   title: string;
   original_title: string;
-  original_title_romanised: string;
+  image: string;
+  movie_banner: string;
   description: string;
   director: string;
   release_date: string;
   running_time: string;
   rt_score: string;
-  image: {
-    original: string;
-  };
+  moviePrice: '700 ALL'; // Adjust this type according to your requirement
 }
 
 const MovieDetails: React.FC = () => {
@@ -24,13 +23,21 @@ const MovieDetails: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch("https://ghibliapi.vercel.app");
-      const data: Movie[] = await response.json();
-      const movie = data.find((movie) => movie.id === params.id);
-      setMovie(movie);
+      try {
+        const response = await fetch(`https://ghibliapi.vercel.app/films/${params.id}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch movie data');
+        }
+        const data: Movie = await response.json();
+        console.log("Image URL:", data.image); // Add this line to log the image URL
+        setMovie(data);
+      } catch (error) {
+        console.error('Error fetching movie data:', error);
+      }
     };
     fetchData();
   }, [params.id]);
+  
 
   const PassDate = () => {
     navigate(`/movie-details/${movie?.id}/book-ticket`, {
@@ -47,12 +54,14 @@ const MovieDetails: React.FC = () => {
       {movie && (
         <div className="movie-details">
           <div className="poster">
-            <img src={movie.image.original} alt="Poster" />
+            {/* Ensure the image URL is accessed correctly */}
+            <img src={movie.image} alt="Poster" />
           </div>
           <div className="movie-info">
             <h1 className="movie-name">{movie.title}</h1>
+            <h2 className="movie-title-japanese">{movie.original_title}</h2>
             <div className="movie-summary">{movie.description}</div>
-            <div className="movie-genre detail-item">
+            <div className="director detail-item">
               <span className="details-heading">Director :</span>{" "}
               <span className="detail-Title">{movie.director}</span>
             </div>
@@ -60,13 +69,15 @@ const MovieDetails: React.FC = () => {
               <span className="details-heading">Release Date :</span>
               <span className="detail-Title">{movie.release_date}</span>
             </div>
-            <div className="running-time detail-item">
-              <span className="details-heading">Running Time :</span>
-              <span className="detail-Title">{movie.running_time} mins</span>
-            </div>
+        
+            {/* Adjust the rating and price accordingly */}
             <div className="rating detail-item">
               <span className="details-heading">Rating :</span>
               <span className="detail-Title">{movie.rt_score}</span>
+            </div>
+            <div className="price detail-item">
+              <span className="details-heading">Price :</span>
+              <span className="detail-Title">{movie.moviePrice}</span>
             </div>
             <button className="book-btn" onClick={PassDate}>
               Book Ticket
