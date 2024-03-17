@@ -23,7 +23,7 @@ const MovieList: React.FC = () => {
   return (
     <div className='movie-list'>
       {movieList.map((movie: Movie) => (
-        <div key={movie.id}>
+        <div key={movie.id} className="movie-card-container">
           <Card movie={movie} />
         </div>
       ))}

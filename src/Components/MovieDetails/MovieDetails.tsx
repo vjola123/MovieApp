@@ -77,7 +77,7 @@ const MovieDetails: React.FC = () => {
             </div>
             <div className="price detail-item">
               <span className="details-heading">Price :</span>
-              <span className="detail-Title">{movie.moviePrice}</span>
+              <span className="detail-Title">{movie.moviePrice}700L</span>
             </div>
             <button className="book-btn" onClick={PassDate}>
               Book Ticket

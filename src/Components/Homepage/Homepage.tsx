@@ -43,12 +43,13 @@ const HomePage: React.FC = () => {
         {data.map((movie: Movie, index: number) => (
           <img
             key={index}
-            src={movie.image} // Use the image URL for the image
+            src={movie.image} 
             alt={movie.title}
+            style={{ width: "300px", height: "400px" }} 
           />
         ))}
       </Slider>
-      <h1 className="heading">Movies</h1>
+
       <MovieList />
     </>
   );

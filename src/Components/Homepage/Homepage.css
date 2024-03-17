@@ -4,7 +4,7 @@
 }
 .homepage-container {
     display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Adjust the number of columns as needed */
+  grid-template-columns: repeat(4, 1fr); 
   gap: 20px; 
 }
 .slick-slide>div{

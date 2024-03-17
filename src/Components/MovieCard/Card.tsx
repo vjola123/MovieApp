@@ -5,32 +5,36 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Card.module.css";
 import { Movie } from "../../type";
 
-
 interface CardProps {
   movie: Movie;
+  toggleFavorite: (movieId: string) => void;
 }
 
-const MovieCard: React.FC<CardProps> = ({ movie }) => {
+const MovieCard: React.FC<CardProps> = ({ movie, toggleFavorite }) => {
   const { id, title, director, image } = movie;
   const navigate = useNavigate();
   const [isFavorite, setFavorite] = useState(false);
   const [heartIcon, setHeartIcon] = useState(<HeartOutlined />);
 
-  const toggleFavorite = () => {
+  const handleToggleFavorite = () => {
     const newFavoriteState = !isFavorite;
     setFavorite(newFavoriteState);
     setHeartIcon(newFavoriteState ? <HeartFilled /> : <HeartOutlined />);
+    toggleFavorite(id); 
   };
 
   const handleImageError = () => {
-    // Handle the image error here, could be setting a state or performing any action
     console.error("Error loading image:", image);
+  };
+
+  const navigateToMovieDetails = () => {
+    navigate(`/movie-details/${id}`);
   };
 
   return (
     <Card
       hoverable
-      onClick={() => navigate(id)}
+      onClick={navigateToMovieDetails} 
       className={styles.filmCard}
     >
       <Card.Meta title={title} description={director} />
@@ -41,7 +45,7 @@ const MovieCard: React.FC<CardProps> = ({ movie }) => {
         <Button
           className={styles.likeButton}
           icon={heartIcon}
-          onClick={toggleFavorite}
+          onClick={handleToggleFavorite} 
         />
       </div>
     </Card>

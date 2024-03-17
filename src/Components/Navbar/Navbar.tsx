@@ -7,7 +7,7 @@ const Navbar: React.FC = () => {
       <div className="logo">
         <h1>Ghibli Movie Ticket</h1>
       </div>
-      <div className="items"> Book </div>
+      <button className="items"> Book </button>
     </div>
   );
 }
