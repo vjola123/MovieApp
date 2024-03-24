@@ -1,5 +1,6 @@
 import React from "react";
-import { Movie } from "./type";
+import { Movie } from "../type";
+
 
 
 interface FavoritesProps {

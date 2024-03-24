@@ -16,11 +16,18 @@ const MovieCard: React.FC<CardProps> = ({ movie, toggleFavorite }) => {
   const [isFavorite, setFavorite] = useState(false);
   const [heartIcon, setHeartIcon] = useState(<HeartOutlined />);
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.stopPropagation(); // Stop propagation of the click event
     const newFavoriteState = !isFavorite;
     setFavorite(newFavoriteState);
     setHeartIcon(newFavoriteState ? <HeartFilled /> : <HeartOutlined />);
-    toggleFavorite(id); 
+    toggleFavorite(id);
+
+    // Save movie details to local storage
+    const path = `/movie-details/${id}`;
+    const storedPaths = JSON.parse(localStorage.getItem('movieDetailsPaths') || '[]');
+    const updatedPaths = newFavoriteState ? [...storedPaths, path] : storedPaths.filter(p => p !== path);
+    localStorage.setItem('movieDetailsPaths', JSON.stringify(updatedPaths));
   };
 
   const handleImageError = () => {
@@ -34,7 +41,7 @@ const MovieCard: React.FC<CardProps> = ({ movie, toggleFavorite }) => {
   return (
     <Card
       hoverable
-      onClick={navigateToMovieDetails} 
+      onClick={navigateToMovieDetails}
       className={styles.filmCard}
     >
       <Card.Meta title={title} description={director} />
@@ -45,7 +52,7 @@ const MovieCard: React.FC<CardProps> = ({ movie, toggleFavorite }) => {
         <Button
           className={styles.likeButton}
           icon={heartIcon}
-          onClick={handleToggleFavorite} 
+          onClick={handleToggleFavorite}
         />
       </div>
     </Card>
