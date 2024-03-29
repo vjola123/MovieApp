@@ -1,0 +1,19 @@
+.Search {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+  }
+  
+  .search-bar-container {
+    width: 400px; /* Adjust width as needed */
+    margin: auto; /* Center horizontally */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  
+  .search-icon {
+    width: 300px; /* Adjust as needed */
+    margin-right: 0; /* Move icon to the left */
+  }
+  

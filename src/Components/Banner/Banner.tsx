@@ -9,7 +9,6 @@ const Banner: React.FC = () => {
     'https://static2.cbrimages.com/wordpress/wp-content/uploads/2019/01/Studio-Ghibli-Movies.jpg',
     'https://mymodernmet.com/wp/wp-content/uploads/2020/12/studio-ghibli-more-free-images-thumbnail.jpg',
     'https://assets.rebelmouse.io/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbWFnZSI6Imh0dHBzOi8vbWVkaWEucmJsLm1zL2ltYWdlP3U9JTJGZmlsZXMlMkYyMDE1JTJGMTElMkYxNCUyRjYzNTgzMDY4OTI1MjQ0NDA2Ny02MDk5NDkxNjdfU3R1ZGlvJTI1MjBHaGlibGkuanBnJmhvPWh0dHAlM0ElMkYlMkZjZG4xLnRoZW9keXNzZXlvbmxpbmUuY29tJnM9MzA1Jmg9YTg4YmMzNjRhNzU2YzkwODNhMmEyMzlkZWU0MWE2NzQ3ODNlOGY0NDc1ZDBiNTA0NTVhODhlNjhlZTQ3N2MyZiZzaXplPTk4MHgmYz0zNTI1MzQ5ODAyIiwiZXhwaXJlc19hdCI6MTY2NTQxNzE1N30.6sxdGOcyjisNn6-bdfCawOZGcRyo8Gjm9VhaMI6_N6s/img.jpg?width=1200&height=628',
-   
   ];
 
   const settings = {
@@ -28,7 +27,7 @@ const Banner: React.FC = () => {
       <Slider {...settings}>
         {bannerImages.map((imageUrl, index) => (
           <div key={index}>
-            <img src={imageUrl} alt={`Banner ${index + 1}`} />
+            <img src={imageUrl} alt={`Banner ${index + 1}`} className="banner-image" />
           </div>
         ))}
       </Slider>

@@ -1,15 +1,29 @@
-import React from 'react';
+// Navbar.tsx
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Input, Button } from 'antd';
 import { HeartOutlined, CalendarOutlined } from '@ant-design/icons';
 import "./Navbar.css"
+import MovieCard from '../MovieCard/Card';
 
 const { Search } = Input;
 
 const Navbar: React.FC = () => {
-  const handleSearch = (value: string) => {
-    // Handle search functionality here
-    console.log('Search query:', value);
+  const [searchResult, setSearchResult] = useState<any>(null);
+
+  // Modified handleSearch function to accept value as a parameter
+  const handleSearch = async (value: string) => {
+    try {
+      const response = await fetch(`https://ghibliapi.vercel.app/films?title=${value}`);
+      if (response.ok) {
+        const data = await response.json();
+        setSearchResult(data);
+      } else {
+        console.error('Failed to fetch movie data');
+      }
+    } catch (error) {
+      console.error('Error fetching movie data:', error);
+    }
   };
 
   return (
@@ -19,9 +33,7 @@ const Navbar: React.FC = () => {
           <img className="logo1" src="http://teemato.com/wp-content/uploads/studio-ghibli-collection-514a30138ff15.png" alt="Logo" />
         </Link>
       </div>
-      <div className="search-bar">
-        <Search placeholder="Search movies" onSearch={handleSearch} enterButton />
-      </div>
+     
       <div className="nav-buttons">
         <Link to="/favorites">
           <Button className='fav-button' icon={<HeartOutlined />} type="text">Favorites</Button>
@@ -30,6 +42,9 @@ const Navbar: React.FC = () => {
           <Button className='book-button' icon={<CalendarOutlined />} type="text">Booked</Button>
         </Link>
       </div>
+      {searchResult && searchResult.map((movie: any) => (
+        <MovieCard key={movie.id} movie={movie} onSearch={handleSearch} />
+      ))}
     </nav>
   );
 };

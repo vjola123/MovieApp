@@ -1,3 +1,4 @@
+// MovieDetails.tsx
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./MovieDetails.css";
@@ -37,7 +38,6 @@ const MovieDetails: React.FC = () => {
     };
     fetchData();
   }, [params.id]);
-  
 
   const PassDate = () => {
     navigate(`/movie-details/${movie?.id}/book-ticket`, {
@@ -50,7 +50,7 @@ const MovieDetails: React.FC = () => {
 
   return (
     <div className="movie-details-container">
-      <h1 className="heading">Movie Details</h1>
+     
       {movie && (
         <div className="movie-details">
           <div className="poster">

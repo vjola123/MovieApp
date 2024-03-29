@@ -1,28 +1,35 @@
-import React from 'react';
-import { Card, Button } from 'antd';
-import { HeartFilled } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
 import { Movie } from '../type';
+import MovieCard from './MovieCard/Card';
 
-interface FaveProps {
-  favorites: Movie[];
-  handleRemoveFavorite: (movie: Movie) => void;
-}
 
-const Fave: React.FC<FaveProps> = ({ favorites, handleRemoveFavorite }) => {
+
+const Fave: React.FC = () => {
+  const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
+
+  useEffect(() => {
+    // Retrieve stored favorite movie IDs from local storage
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites') ?? '[]');
+
+    // Fetch movie details for each favorite movie ID
+    const fetchFavoriteMovies = async () => {
+      const promises = storedFavorites.map(async (movieId: string) => {
+        const response = await fetch(`https://ghibliapi.vercel.app/films/${params.id}`);
+        return await response.json();
+      });
+      const favoriteMoviesData = await Promise.all(promises);
+      setFavoriteMovies(favoriteMoviesData);
+    };
+
+    fetchFavoriteMovies();
+  }, []);
+
   return (
     <div>
-      {favorites.map((movie) => (
-        <Card key={movie.id}>
-          <h3>{movie.title}</h3>
-          <p>{movie.director}</p>
-          <Button
-            type="text"
-            icon={<HeartFilled />}
-            onClick={() => handleRemoveFavorite(movie)}
-          >
-            Remove from Favorites
-          </Button>
-        </Card>
+      {favoriteMovies.map((movie) => (
+        <MovieCard key={movie.id} movie={movie} onSearch={function (query: string): void {
+          throw new Error('Function not implemented.');
+        } } />
       ))}
     </div>
   );
