@@ -2,34 +2,37 @@ import React, { useEffect, useState } from 'react';
 import { Movie } from '../type';
 import MovieCard from './MovieCard/Card';
 
-
-
 const Fave: React.FC = () => {
   const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
 
   useEffect(() => {
-    // Retrieve stored favorite movie IDs from local storage
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites') ?? '[]');
-
-    // Fetch movie details for each favorite movie ID
-    const fetchFavoriteMovies = async () => {
-      const promises = storedFavorites.map(async (movieId: string) => {
-        const response = await fetch(`https://ghibliapi.vercel.app/films/${params.id}`);
-        return await response.json();
-      });
-      const favoriteMoviesData = await Promise.all(promises);
-      setFavoriteMovies(favoriteMoviesData);
-    };
-
-    fetchFavoriteMovies();
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    setFavoriteMovies(storedFavorites);
   }, []);
+
+  // Create a set to store unique movie IDs
+  const uniqueMovieIds = new Set<string>();
+
+  // Filter out duplicate movies based on unique IDs
+  const uniqueFavoriteMovies = favoriteMovies.filter((movie) => {
+    if (uniqueMovieIds.has(movie.id)) {
+      return false;
+    }
+    uniqueMovieIds.add(movie.id);
+    return true;
+  });
 
   return (
     <div>
-      {favoriteMovies.map((movie) => (
-        <MovieCard key={movie.id} movie={movie} onSearch={function (query: string): void {
-          throw new Error('Function not implemented.');
-        } } />
+      {uniqueFavoriteMovies.map((movie) => (
+        localStorage.getItem(movie.id) === 'true' && (
+          <MovieCard
+            key={movie.id}
+            movie={movie}
+            onSearch={() => { }}
+            onFavoriteChange={() => { }}
+          />
+        )
       ))}
     </div>
   );

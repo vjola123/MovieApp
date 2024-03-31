@@ -1,4 +1,3 @@
-// Navbar.tsx
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Input, Button } from 'antd';
@@ -10,6 +9,7 @@ const { Search } = Input;
 
 const Navbar: React.FC = () => {
   const [searchResult, setSearchResult] = useState<any>(null);
+  const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
 
   // Modified handleSearch function to accept value as a parameter
   const handleSearch = async (value: string) => {
@@ -24,6 +24,14 @@ const Navbar: React.FC = () => {
     } catch (error) {
       console.error('Error fetching movie data:', error);
     }
+  };
+
+  const handleFavoriteChange = (movie: Movie, isFavorite: boolean) => {
+    const updatedFavorites = isFavorite
+      ? [...favoriteMovies, movie]
+      : favoriteMovies.filter((fav) => fav.id !== movie.id);
+    setFavoriteMovies(updatedFavorites);
+    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
   };
 
   return (
@@ -43,7 +51,7 @@ const Navbar: React.FC = () => {
         </Link>
       </div>
       {searchResult && searchResult.map((movie: any) => (
-        <MovieCard key={movie.id} movie={movie} onSearch={handleSearch} />
+        <MovieCard key={movie.id} movie={movie} onSearch={handleSearch} onFavoriteChange={handleFavoriteChange} />
       ))}
     </nav>
   );

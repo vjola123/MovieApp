@@ -1,4 +1,3 @@
-// MovieCard.tsx
 import React, { useState } from "react";
 import { Card, Button } from "antd";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
@@ -8,14 +7,22 @@ import { Movie } from "../../type";
 
 interface CardProps {
   movie: Movie;
-  onSearch: (query: string) => void; // Add onSearch prop
+  onSearch: (query: string) => void;
+  onFavoriteChange: (movie: Movie, isFavorite: boolean) => void;
 }
 
-const MovieCard: React.FC<CardProps> = ({ movie, onSearch }) => {
+const MovieCard: React.FC<CardProps> = ({ movie, onSearch, onFavoriteChange }) => {
   const { id, title, director, image } = movie;
   const navigate = useNavigate();
   const [isFavorite, setFavorite] = useState(false);
   const [heartIcon, setHeartIcon] = useState(<HeartOutlined />);
+
+  // Set the initial favorite state when the component mounts
+  useState(() => {
+    const isMovieFavorite = localStorage.getItem(id) === 'true';
+    setFavorite(isMovieFavorite);
+    setHeartIcon(isMovieFavorite ? <HeartFilled /> : <HeartOutlined />);
+  }, []);
 
   const handleToggleFavorite = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
@@ -23,9 +30,11 @@ const MovieCard: React.FC<CardProps> = ({ movie, onSearch }) => {
     setFavorite(newFavoriteState);
     setHeartIcon(newFavoriteState ? <HeartFilled /> : <HeartOutlined />);
 
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    const updatedFavorites = newFavoriteState ? [...storedFavorites, movie] : storedFavorites.filter((fav: Movie) => fav.id !== id);
-    localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+    // Update local storage with the new favorite state
+    localStorage.setItem(id, String(newFavoriteState));
+
+    // Pass the updated favorite state to the parent component
+    onFavoriteChange(movie, newFavoriteState);
   };
 
   const handleImageError = () => {
@@ -34,7 +43,7 @@ const MovieCard: React.FC<CardProps> = ({ movie, onSearch }) => {
 
   const navigateToMovieDetails = () => {
     navigate(`/movie-details/${id}`);
-    onSearch(""); // Call onSearch function with an empty string
+    onSearch(""); // Clear the search query
   };
 
   return (

@@ -1,4 +1,5 @@
 export interface Movie {
+    isFavorite: unknown;
     id: string;
     title: string;
     original_title: string;
