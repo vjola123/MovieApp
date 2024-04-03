@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button } from "antd";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import { Movie } from "../../type";
 interface CardProps {
   movie: Movie;
   onSearch: (query: string) => void;
-  onFavoriteChange: (movie: Movie, isFavorite: boolean) => void;
+  onFavoriteChange: (movie: Movie, isFavorite: boolean) => void; 
 }
 
 const MovieCard: React.FC<CardProps> = ({ movie, onSearch, onFavoriteChange }) => {
@@ -17,23 +17,29 @@ const MovieCard: React.FC<CardProps> = ({ movie, onSearch, onFavoriteChange }) =
   const [isFavorite, setFavorite] = useState(false);
   const [heartIcon, setHeartIcon] = useState(<HeartOutlined />);
 
-  // Set the initial favorite state when the component mounts
-  useState(() => {
+ 
+  useEffect(() => {
     const isMovieFavorite = localStorage.getItem(id) === 'true';
     setFavorite(isMovieFavorite);
     setHeartIcon(isMovieFavorite ? <HeartFilled /> : <HeartOutlined />);
-  }, []);
+  }, [id]); 
 
-  const handleToggleFavorite = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleFavoriteButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation();
-    const newFavoriteState = !isFavorite;
+    handleToggleFavorite(event);
+  };
+  const handleToggleFavorite = (event: React.MouseEvent<HTMLButtonElement>) => {
+     const newFavoriteState = !isFavorite;
     setFavorite(newFavoriteState);
-    setHeartIcon(newFavoriteState ? <HeartFilled /> : <HeartOutlined />);
+    if (newFavoriteState) {
+      setHeartIcon(<HeartFilled />);
+    } else {
+      setHeartIcon(<HeartOutlined />);
+    }
 
-    // Update local storage with the new favorite state
     localStorage.setItem(id, String(newFavoriteState));
 
-    // Pass the updated favorite state to the parent component
+  
     onFavoriteChange(movie, newFavoriteState);
   };
 
@@ -43,7 +49,7 @@ const MovieCard: React.FC<CardProps> = ({ movie, onSearch, onFavoriteChange }) =
 
   const navigateToMovieDetails = () => {
     navigate(`/movie-details/${id}`);
-    onSearch(""); // Clear the search query
+    onSearch(""); 
   };
 
   return (
@@ -57,12 +63,12 @@ const MovieCard: React.FC<CardProps> = ({ movie, onSearch, onFavoriteChange }) =
         <img src={image} alt={title} onError={handleImageError} />
       </div>
       <div className={styles.buttonContainer}>
-        <Button
-          className={styles.likeButton}
-          icon={heartIcon}
-          onClick={handleToggleFavorite}
-          style={{ color: isFavorite ? 'red' : 'black' }}
-        />
+      <Button
+  className={styles.likeButton}
+  icon={heartIcon}
+  onClick={handleFavoriteButtonClick}
+  style={{ color: isFavorite ? 'red' : 'black' }}
+/>
       </div>
     </Card>
   );

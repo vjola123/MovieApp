@@ -1,19 +1,16 @@
 import React from "react";
-import { Movie } from "../type";
+import { useFavorites } from "./FavoritesProvider";
+ 
 
+const Favorites: React.FC = () => {
+  const { favorites } = useFavorites(); 
 
-
-interface FavoritesProps {
-  favorites: Movie[];
-}
-
-const Favorites: React.FC<FavoritesProps> = ({ favorites }) => {
   return (
     <div>
       <h2>Favorites</h2>
       <ul>
-        {favorites.map((movie: Movie) => (
-          <li key={movie.id}>{movie.title}</li>
+        {favorites.map((movieId: string) => (
+          <li key={movieId}>{movieId}</li> {}
         ))}
       </ul>
     </div>

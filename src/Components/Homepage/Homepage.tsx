@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import MovieList from "../MovieList/MovieList";
+
 import { fetchAllMovies } from "../../api";
 import { Movie } from "../../type";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "../Navbar/SearchBar";
-import MovieCard from "../MovieCard/Card";
+
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import MovieList from "../MovieList/MovieList";
+import MovieCard from "../MovieCard/Card";
 
 interface SliderSettings {
   infinite: boolean;
@@ -22,7 +24,7 @@ interface SliderSettings {
 const HomePage: React.FC = () => {
   const [data, setData] = useState<Movie[]>([]);
   const [searchResult, setSearchResult] = useState<Movie | null>(null);
-  const navigate = useNavigate(); // Initialize the useNavigate hook
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,7 +52,6 @@ const HomePage: React.FC = () => {
       if (response.ok) {
         const searchData: Movie[] = await response.json();
         if (searchData.length > 0) {
-          // Set the search result and navigate to the movie details page in a new window
           setSearchResult(searchData[0]);
           navigate(`/movie-details/${searchData[0].id}`, { target: '_blank' });
         } else {

@@ -1,38 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import { Movie } from '../type';
-import MovieCard from './MovieCard/Card';
+
+import React from 'react';
+import { useMoviePreferences } from './useMoviePreferences';
+
 
 const Fave: React.FC = () => {
-  const [favoriteMovies, setFavoriteMovies] = useState<Movie[]>([]);
-
-  useEffect(() => {
-    const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
-    setFavoriteMovies(storedFavorites);
-  }, []);
-
-  // Create a set to store unique movie IDs
-  const uniqueMovieIds = new Set<string>();
-
-  // Filter out duplicate movies based on unique IDs
-  const uniqueFavoriteMovies = favoriteMovies.filter((movie) => {
-    if (uniqueMovieIds.has(movie.id)) {
-      return false;
-    }
-    uniqueMovieIds.add(movie.id);
-    return true;
-  });
+  const { favoriteMovies } = useMoviePreferences();
 
   return (
     <div>
-      {uniqueFavoriteMovies.map((movie) => (
-        localStorage.getItem(movie.id) === 'true' && (
-          <MovieCard
-            key={movie.id}
-            movie={movie}
-            onSearch={() => { }}
-            onFavoriteChange={() => { }}
-          />
-        )
+      <h2>Favorites</h2>
+      {favoriteMovies.map((movie) => (
+        <div key={movie.id}>{movie.title}</div>
       ))}
     </div>
   );

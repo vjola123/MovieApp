@@ -1,4 +1,4 @@
-// MovieDetails.tsx
+
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./MovieDetails.css";
@@ -54,7 +54,7 @@ const MovieDetails: React.FC = () => {
       {movie && (
         <div className="movie-details">
           <div className="poster">
-            {/* Ensure the image URL is accessed correctly */}
+            {}
             <img src={movie.image} alt="Poster" />
           </div>
           <div className="movie-info">
@@ -70,7 +70,7 @@ const MovieDetails: React.FC = () => {
               <span className="detail-Title">{movie.release_date}</span>
             </div>
         
-            {/* Adjust the rating and price accordingly */}
+            {}
             <div className="rating detail-item">
               <span className="details-heading">Rating :</span>
               <span className="detail-Title">{movie.rt_score}</span>
