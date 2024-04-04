@@ -9,8 +9,8 @@
 
 }
 
-.logo {
-    width:200px;
+.logo1 {
+    width: 150px;
     height: 180px;
     margin-right: 0;
     margin-bottom: 0;
@@ -27,11 +27,50 @@
     background-color: antiquewhite;
     margin-left: 10px;
 }
-@media screen and (max-width: 550px) {
-    .logo>h1{
-        font-size: 15px;
-    }
-    .items{
-        font-size: 10px;
-    }
+
+
+.title-nav {
+    font-family: "Josefin Sans", sans-serif;
+    font-size: 40px;
+    margin: 0;
+    padding-bottom: 0.5rem;
+    letter-spacing: 0.5rem;
+    color: #1677ff;
+    transition: all 0.3s ease;
+    z-index: 3;
+
 }
+
+h1:hover {
+    transform: translate3d(0, -10px, 22px);
+    color: #ff0266;
+    
+  }
+  
+
+  @media screen and (max-width: 550px) {
+    .navbar {
+      height: auto; 
+      padding: 10px; 
+      justify-content: center;
+    }
+  
+    .logo1 {
+      width: 100px; 
+      height: auto; 
+      margin-right: 0;
+      margin-bottom: 10px; 
+    }
+  
+    .title-nav {
+      font-size: 30px; 
+      letter-spacing: 0.3rem; 
+      margin-left: 15px;
+    }
+  
+    .fav-button, .book-button {
+      font-size: 14px; 
+      margin-left: 5px; 
+    }
+  }
+  

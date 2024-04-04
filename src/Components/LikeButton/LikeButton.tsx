@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-
+import './LikeButton.css'
 import { Movie } from '../../type';
 import { useLikedMovies } from '../LikedMovies/LikedMovieContext';
 import { HeartFilled, HeartOutlined } from '@ant-design/icons';
@@ -23,12 +23,16 @@ const LikeButton: React.FC<LikeButtonProps> = ({ movie }) => {
     if (!liked) {
       addToLikedMovies(movie);
     } else {
-      removeFromLikedMovies(movie.id); 
+      removeFromLikedMovies(movie.id);
     }
   };
 
   return (
-    <button onClick={handleLike} className={`like-button ${liked ? 'liked' : ''}`}>
+    <button
+      onClick={handleLike}
+      className={`like-button ${liked ? 'liked' : ''}`}
+
+    >
       {liked ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined />}
     </button>
   );

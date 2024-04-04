@@ -1,0 +1,46 @@
+.liked-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+   margin: 0 auto;
+  font-family: var(--font-sans);
+}
+  
+
+
+.liked-card {
+    position: relative;
+    display: flex;
+    position: relative;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  padding: 1rem;
+  width: 300px;
+  text-align: center;
+  color: whitesmoke;
+  background-color: whitesmoke;
+  margin-top: 100px;
+ 
+  
+  @media (min-width: $bp-md) {
+    height: 350px;
+  }
+  
+}
+
+.liked-card:hover {
+   
+  overflow: hidden;
+  padding: 1rem;
+  width: 320px;
+  text-align: center;
+  color: rgb(36, 34, 34);
+  background-color: rgb(65, 60, 60);
+
+}
+
+.liked-card.favorite {
+    display: flex;
+    flex-direction: column; 
+}

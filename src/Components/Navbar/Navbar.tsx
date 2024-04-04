@@ -29,15 +29,17 @@ const Navbar: React.FC<NavbarProps> = ({ movies, setFilteredMovies }) => {
     <header>
       <nav className="navbar">
         <div className="logo">
+
           <Link to="/">
             <img
               className="logo1"
-              src="http://teemato.com/wp-content/uploads/studio-ghibli-collection-514a30138ff15.png"
+              src="https://u.cubeupload.com/Totoro/kkfg.png"
               alt="Logo"
             />
+
           </Link>
         </div>
-
+        <h1 className='title-nav'>Ghibli Studio</h1>
         <div className="nav-buttons">
           <Link to="/liked-movies">
             <Button
@@ -48,7 +50,7 @@ const Navbar: React.FC<NavbarProps> = ({ movies, setFilteredMovies }) => {
               Favorites
             </Button>
           </Link>
-         
+
         </div>
       </nav>
     </header>

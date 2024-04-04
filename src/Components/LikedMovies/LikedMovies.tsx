@@ -3,6 +3,7 @@ import Navbar from '../Navbar/Navbar';
 import { useLikedMovies } from './LikedMovieContext';
 import { Movie } from '../../type';
 import Banner from '../Banner/Banner';
+import './LikedMovies.css';
 
 const bannerImages = [
   'https://i.pinimg.com/736x/46/e8/4e/46e84e948b0e52540d3e8e173af604da.jpg',
@@ -10,10 +11,9 @@ const bannerImages = [
   'https://ksassets.timeincuk.net/wp/uploads/sites/55/2018/08/studioghibliranked.jpg'
 ];
 
-
 const LikedMovies: React.FC = () => {
   const { likedMovies } = useLikedMovies();
-  const [filteredLikedMovies, setFilteredLikedMovies] = React.useState(likedMovies);
+  const [filteredLikedMovies, setFilteredLikedMovies] = React.useState<Movie[]>(likedMovies);
 
   const handleSearch = (filteredMovies: Movie[]) => {
     setFilteredLikedMovies(filteredMovies);
@@ -21,20 +21,21 @@ const LikedMovies: React.FC = () => {
 
   return (
     <div>
-      
       <Navbar movies={likedMovies} setFilteredMovies={handleSearch} />
       <Banner bannerImages={bannerImages} />
-      <h2>Liked Movies</h2>
-      <ul>
-        {filteredLikedMovies.map((movie, index) => (
-          <li key={index}>
-            <img src={movie.image} alt={movie.title} />
-            <div>
-              <h3>{movie.title}</h3>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <div className='liked-container'> 
+        
+        <ul>
+          {filteredLikedMovies.map((movie, index) => (
+            <li key={index}>
+              <img className='liked-card' src={movie.image} alt={movie.title} />
+              <div>
+                <h1>{movie.title}</h1>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

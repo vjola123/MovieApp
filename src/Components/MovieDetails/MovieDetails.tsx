@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "./MovieDetails.css";
 import Banner from "../Banner/Banner";
+import Navbar from "../Navbar/Navbar";
+
+interface NavbarProps {
+  title: string;
+}
 
 interface Movie {
   id: string;
@@ -58,6 +63,7 @@ const MovieDetails: React.FC = () => {
 
   return (
     <>
+      <Navbar title="Movie Details" />
       <Banner bannerImages={bannerImages} />
       <div className="movie-details-container">
         {movie && (

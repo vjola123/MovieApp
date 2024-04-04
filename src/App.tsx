@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./Components/Homepage/Homepage";
 import MovieDetails from "./Components/MovieDetails/MovieDetails";
 import LikedMovies from "./Components/LikedMovies/LikedMovies";
@@ -7,6 +7,7 @@ import { LikedMoviesProvider } from "./Components/LikedMovies/LikedMovieContext"
 import Navbar from "./Components/Navbar/Navbar";
 import Banner from "./Components/Banner/Banner";
 import Form from './Components/TicketForm/Form';
+import Footer from "./Components/Footer/Footer";
 
 const App: React.FC = () => {
   const bannerImages = [
@@ -17,28 +18,26 @@ const App: React.FC = () => {
 
   return (
     <LikedMoviesProvider>
-      
-        <Router>
-          <div className="App">
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <>
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
                   <Navbar />
                   <Banner bannerImages={bannerImages} />
-                    <HomePage />
-
-                  </>
-                }
-              />
-              <Route path="/movie-details/:id" element={<MovieDetails />} />
-              <Route path='/movie-details/:id/book-ticket' element={<Form />} />
-              <Route path="/liked-movies" element={<LikedMovies />} />
-            </Routes>
-          </div>
-        </Router>
-     
+                  <HomePage />
+                  <Footer />
+                </>
+              }
+            />
+            <Route path="/movie-details/:id" element={<MovieDetails />} />
+            <Route path='/movie-details/:id/book-ticket' element={<Form />} />
+            <Route path="/liked-movies" element={<LikedMovies />} />
+          </Routes>
+        </div>
+      </Router>
     </LikedMoviesProvider>
   );
 };

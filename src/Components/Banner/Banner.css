@@ -4,3 +4,15 @@
 .banner-image{
     height: 710px;
 }
+
+@media screen and (max-width: 550px) {
+    * {
+      margin: 0;
+    }
+  
+    .banner-image {
+      height: auto; 
+      max-width: 100%; 
+    }
+  }
+  
