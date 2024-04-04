@@ -1,16 +1,27 @@
-.CardContainer {
-    width: fit-content;
-    padding: 20px;
-    display: grid;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
-    border-radius: 10px;
-   
-    background-color: rgb(54, 50, 50);
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 20px; 
-  }
 
- 
+.movieCard {
+  width: 500px;
+  background-color: #eff1f4;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px; 
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+}
+
+.movieCard:hover {
+  transform: scale(1.05);
+}
+
+.movieCard img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.movieCard h2 {
+  font-size: 20px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  text-decoration: none; 
+}

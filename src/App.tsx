@@ -1,13 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './Components/Navbar/Navbar';
-import Footer from './Components/Footer/Footer';
-import HomePage from './Components/Homepage/Homepage';
-import MovieDetails from './Components/MovieDetails/MovieDetails';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import HomePage from "./Components/Homepage/Homepage";
+import MovieDetails from "./Components/MovieDetails/MovieDetails";
+import LikedMovies from "./Components/LikedMovies/LikedMovies";
+import { LikedMoviesProvider } from "./Components/LikedMovies/LikedMovieContext";
+import Navbar from "./Components/Navbar/Navbar";
+import Banner from "./Components/Banner/Banner";
 import Form from './Components/TicketForm/Form';
-import Banner from './Components/Banner/Banner';
-import { MoviePreferencesProvider } from './Components/useMoviePreferences';
-import Fave from './Components/Fave';
 
 const App: React.FC = () => {
   const bannerImages = [
@@ -17,22 +16,31 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="App">
-      <Router>
-        <MoviePreferencesProvider>
-          <Navbar />
-          <Banner bannerImages={bannerImages} />
-          <Routes>
-            <Route path='/' element={<HomePage />} />
-            <Route path='/movie-details/:id' element={<MovieDetails />} />
-            <Route path='/movie-details/:id/book-ticket' element={<Form />} />
-            <Route path='/fave' element={<Fave />} />
-          </Routes>
-          <Footer />
-        </MoviePreferencesProvider>
-      </Router>
-    </div>
+    <LikedMoviesProvider>
+      
+        <Router>
+          <div className="App">
+            <Routes>
+              <Route
+                path="/"
+                element={
+                  <>
+                  <Navbar />
+                  <Banner bannerImages={bannerImages} />
+                    <HomePage />
+
+                  </>
+                }
+              />
+              <Route path="/movie-details/:id" element={<MovieDetails />} />
+              <Route path='/movie-details/:id/book-ticket' element={<Form />} />
+              <Route path="/liked-movies" element={<LikedMovies />} />
+            </Routes>
+          </div>
+        </Router>
+     
+    </LikedMoviesProvider>
   );
-}
+};
 
 export default App;

@@ -1,71 +1,57 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Input, Button } from "antd";
-import { HeartOutlined, CalendarOutlined } from "@ant-design/icons";
-import "./Navbar.css";
-import MovieCard from "../MovieCard/Card";
-import { Movie } from "../../type";
-import { useMoviePreferences } from "../useMoviePreferences";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Movie } from '../../type';
+import { Button } from 'antd';
+import { CalendarOutlined, HeartOutlined } from '@ant-design/icons';
+import './Navbar.css';
 
-const { Search } = Input;
+interface NavbarProps {
+  movies: Movie[];
+  setFilteredMovies: (filteredMovies: Movie[]) => void;
+}
 
-const Navbar: React.FC = () => {
-  const [searchResult, setSearchResult] = useState<Movie[] | null>(null);
-  const { favoriteMovies } = useMoviePreferences();
+const Navbar: React.FC<NavbarProps> = ({ movies, setFilteredMovies }) => {
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchResult, setSearchResult] = useState<Movie[]>([]);
 
-  const handleSearch = async (value: string) => {
-    try {
-      const response = await fetch(
-        `https://ghibliapi.vercel.app/films?title=${value}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setSearchResult(data);
-      } else {
-        console.error("Failed to fetch movie data");
-      }
-    } catch (error) {
-      console.error("Error fetching movie data:", error);
-    }
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value.toLowerCase());
+  };
+
+  const handleSearch = () => {
+    const filteredMovies = movies.filter(movie =>
+      movie.title.toLowerCase().includes(searchQuery)
+    );
+    setSearchResult(filteredMovies);
   };
 
   return (
-    <nav className="navbar">
-      <div className="logo">
-        <Link to="/">
-          <img
-            className="logo1"
-            src="http://teemato.com/wp-content/uploads/studio-ghibli-collection-514a30138ff15.png"
-            alt="Logo"
-          />
-        </Link>
-      </div>
+    <header>
+      <nav className="navbar">
+        <div className="logo">
+          <Link to="/">
+            <img
+              className="logo1"
+              src="http://teemato.com/wp-content/uploads/studio-ghibli-collection-514a30138ff15.png"
+              alt="Logo"
+            />
+          </Link>
+        </div>
 
-      <div className="nav-buttons">
-        <Link to="/fave">
-          <Button
-            className="fav-button"
-            icon={<HeartOutlined />}
-            type="text"
-          >
-            Favorites ({favoriteMovies.length})
-          </Button>
-        </Link>
-        <Link to="/booked">
-          <Button
-            className="book-button"
-            icon={<CalendarOutlined />}
-            type="text"
-          >
-            Booked
-          </Button>
-        </Link>
-      </div>
-      {searchResult &&
-        searchResult.map((movie: Movie) => (
-          <MovieCard key={movie.id} movie={movie} />
-        ))}
-    </nav>
+        <div className="nav-buttons">
+          <Link to="/liked-movies">
+            <Button
+              className="fav-button"
+              icon={<HeartOutlined />}
+              type="text"
+            >
+              Favorites
+            </Button>
+          </Link>
+         
+        </div>
+      </nav>
+    </header>
   );
 };
 
