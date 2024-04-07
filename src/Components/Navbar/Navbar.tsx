@@ -10,20 +10,7 @@ interface NavbarProps {
   setFilteredMovies: (filteredMovies: Movie[]) => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ movies, setFilteredMovies }) => {
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [searchResult, setSearchResult] = useState<Movie[]>([]);
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value.toLowerCase());
-  };
-
-  const handleSearch = () => {
-    const filteredMovies = movies.filter(movie =>
-      movie.title.toLowerCase().includes(searchQuery)
-    );
-    setSearchResult(filteredMovies);
-  };
+const Navbar: React.FC<NavbarProps> = ({movies}) => {
 
   return (
     <header>

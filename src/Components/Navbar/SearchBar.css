@@ -15,5 +15,12 @@
   .search-icon {
     width: 400px; 
     margin-right: 0; 
+    transition: transform 1s ease-in-out;
   }
+  
+  .search-icon:hover {
+    transform: rotate(-20deg);
+    
+  }
+
   

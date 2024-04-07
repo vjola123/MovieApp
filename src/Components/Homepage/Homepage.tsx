@@ -1,11 +1,10 @@
+// HomePage.tsx
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-
 import { fetchAllMovies } from "../../api";
 import { Movie } from "../../type";
 import { useNavigate } from "react-router-dom";
 import SearchBar from "../Navbar/SearchBar";
-
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -46,19 +45,15 @@ const HomePage: React.FC = () => {
     arrows: false,
   };
 
-  const handleSearch = async (value: string) => {
+  const handleSearch = async (searchTerm: string) => {
     try {
-      const response = await fetch(`https://ghibliapi.vercel.app/films?title=${value}`);
-      if (response.ok) {
-        const searchData: Movie[] = await response.json();
-        if (searchData.length > 0) {
-          setSearchResult(searchData[0]);
-          navigate(`/movie-details/${searchData[0].id}`, { target: '_blank' });
-        } else {
-          console.error('Movie not found');
-        }
+      const filteredMovies = data.filter(movie =>
+        movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      if (filteredMovies.length > 0) {
+        setSearchResult(filteredMovies[0]);
       } else {
-        console.error('Failed to fetch movie data');
+        console.error('Movie not found');
       }
     } catch (error) {
       console.error('Error searching for movie:', error);
@@ -74,7 +69,10 @@ const HomePage: React.FC = () => {
       {searchResult && (
         <div className="search-result-container">
           <h2>Search Result:</h2>
-          <MovieCard movie={searchResult} />
+          <MovieCard 
+          movie={searchResult}
+        
+           />
         </div>
       )}
 
@@ -93,7 +91,6 @@ const HomePage: React.FC = () => {
       </div>
 
       <div className="movie-list-container">
-       
         <MovieList />
       </div>
     </div>

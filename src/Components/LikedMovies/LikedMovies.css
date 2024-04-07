@@ -1,17 +1,14 @@
-.liked-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-   margin: 0 auto;
-  font-family: var(--font-sans);
+.container-liked {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
 }
-  
 
 
 .liked-card {
-    position: relative;
-    display: flex;
-    position: relative;
+  position: relative;
+  display: flex;
+  position: relative;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -21,26 +18,31 @@
   color: whitesmoke;
   background-color: whitesmoke;
   margin-top: 100px;
- 
-  
-  @media (min-width: $bp-md) {
-    height: 350px;
-  }
+  transition: transform 0.3s;
+  margin-bottom: 30px;
   
 }
 
 .liked-card:hover {
-   
+  transform: scale(1.1);
+}
+
+.liked-card.favorite {
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
   overflow: hidden;
   padding: 1rem;
   width: 320px;
   text-align: center;
-  color: rgb(36, 34, 34);
+  color: white;
   background-color: rgb(65, 60, 60);
-
+  margin-top: 30px;
+  transition: transform 0.3s;
 }
 
-.liked-card.favorite {
-    display: flex;
-    flex-direction: column; 
+.description:hover {
+  transform: scale(1.1); /* Rritja e madhësisë së përshkrimit në hover */
 }

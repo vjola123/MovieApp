@@ -4,6 +4,7 @@ import { useLikedMovies } from './LikedMovieContext';
 import { Movie } from '../../type';
 import Banner from '../Banner/Banner';
 import './LikedMovies.css';
+import { Form } from 'antd';
 
 const bannerImages = [
   'https://i.pinimg.com/736x/46/e8/4e/46e84e948b0e52540d3e8e173af604da.jpg',
@@ -25,12 +26,13 @@ const LikedMovies: React.FC = () => {
       <Banner bannerImages={bannerImages} />
       <div className='liked-container'> 
         
-        <ul>
+        <ul className='container-liked'>
           {filteredLikedMovies.map((movie, index) => (
             <li key={index}>
               <img className='liked-card' src={movie.image} alt={movie.title} />
               <div>
                 <h1>{movie.title}</h1>
+                <Form className='description'>{movie.description}</Form>
               </div>
             </li>
           ))}

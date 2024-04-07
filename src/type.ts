@@ -10,5 +10,5 @@ export interface Movie {
     release_date: string;
     running_time: string;
     rt_score: string;
-    moviePrice: '700 ALL'; // This seems to be a string literal type, not sure if you intended this
+    moviePrice: '700 ALL'; 
 }
